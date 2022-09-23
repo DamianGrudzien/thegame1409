@@ -1,7 +1,5 @@
 package org.example.game.characters;
 
-import org.example.game.FactorDecreaseAttack;
-
 public class Lancer extends Warrior{
 
     public Lancer() {
@@ -13,7 +11,7 @@ public class Lancer extends Warrior{
         int healthBefore = defender.getHealth();
         defender.receiveDamage(this);
 
-        if(defender.hasNextWarrior()) {
+        if(defender.hasWarriorBehind()) {
             double decreaseAttack = 0.5;
             int healthAfter = defender.getHealth();
             int diffHealth = healthBefore - healthAfter;

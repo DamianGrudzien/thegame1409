@@ -21,17 +21,9 @@ public class Vampire extends Warrior{
         int healthAfter = defender.getHealth();
         int healthDiff = healthBefore - healthAfter;
 
-//        if(healthDiff == this.getAttack()){
-//            setVampireHealth(0);
-//        } else{
-//            setVampireHealth(healthDiff);
-//        }
+
         final int percents = 100;
         setHealth(getHealth() +  (healthDiff * VAMPIRISM) / percents);
     }
 
-//    private void setVampireHealth(int healthDiff) {
-//        final int percents = 100;
-//        setHealth(getHealth() +  (healthDiff * VAMPIRISM) / percents);
-//    }
 }
