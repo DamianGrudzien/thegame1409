@@ -1,5 +1,8 @@
 package org.example.game.characters;
 
+interface HasAttack {
+    int getAttack();
+}
 
 interface HasHealth{
     int getHealth();
@@ -7,19 +10,19 @@ interface HasHealth{
         return getHealth() > 0;
     }
 }
-
-interface CanReceiveDamage extends HasHealth {
-    void receiveDamage(HasAttack damager);
+interface HasWarriorBehind {
     Warrior getNextWarrior();
     void setNextWarrior(Warrior nextWarrior);
-    boolean hasNextWarrior();
+    boolean hasWarriorBehind();
+}
+
+interface CanReceiveDamage extends HasHealth, HasWarriorBehind {
+    void receiveDamage(HasAttack damager);
 }
 public class Warrior implements HasHealth, HasAttack, CanReceiveDamage{
     private final int attack;
     protected int health;
     protected int initialHealth;
-
-
 
     protected Warrior nextWarrior;
 
@@ -66,7 +69,7 @@ public class Warrior implements HasHealth, HasAttack, CanReceiveDamage{
     public Warrior getNextWarrior() {
         return nextWarrior;
     }
-    public boolean hasNextWarrior() {
+    public boolean hasWarriorBehind() {
         return (nextWarrior!=null);
     }
 

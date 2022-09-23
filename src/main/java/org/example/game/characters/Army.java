@@ -44,8 +44,6 @@ public class Army {
         tail = newNodeTail;
     }
 
-//    private int numberOfWarriors;
-//    private Army army = new Army();
 
     public Army() {
     }
