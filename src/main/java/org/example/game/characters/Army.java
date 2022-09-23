@@ -6,13 +6,50 @@ import java.util.function.Supplier;
 public class Army {
 
 
-    private static class Node {
+    private class Node
+            extends Warrior
+            implements WarriorInArmy{
         Warrior warrior;
         Node next;
 
         public Node(Warrior warrior) {
             this.warrior = warrior;
             this.next = this;
+        }
+
+        @Override
+        public Warrior getNextBehind() {
+            return (next != head) ? next : null;
+        }
+
+        @Override
+        public int getAttack() {
+            return warrior.getAttack();
+        }
+
+        @Override
+        public int getHealth() {
+            return warrior.getHealth();
+        }
+
+        @Override
+        protected void setHealth(int health) {
+            warrior.setHealth(health);
+        }
+
+        @Override
+        public void receiveDamage(HasAttack damager) {
+            warrior.receiveDamage(damager);
+        }
+
+        @Override
+        public void hit(CanReceiveDamage defender) {
+            warrior.hit(defender);
+        }
+
+        @Override
+        public boolean isAlive() {
+            return warrior.isAlive();
         }
     }
 
@@ -24,7 +61,7 @@ public class Army {
     }
 
     private Warrior peek(){
-        return head.next.warrior;
+        return head.next;
     }
 
     private void removeFromHead(){
@@ -55,11 +92,11 @@ public class Army {
     public Army addUnits(Supplier<Warrior> factory, int quantity){
 
         for (int i = 0; i < quantity; i++) {
-            var warrior = factory.get();
-            if (!isEmpty()) {
-                tail.warrior.setNextWarrior(warrior);
-            }
-            addToTail(warrior);
+//            var warrior = factory.get();
+//            if (!isEmpty()) {
+//                tail.warrior.setNextWarrior(warrior);
+//            }
+            addToTail(factory.get());
         }
         return this;
 
@@ -84,7 +121,8 @@ public class Army {
             if(!hasNext()){
                 throw new NoSuchElementException();
             }
-            return peek();
+            var res = peek();
+            return res == head ? null : res;
         }
     }
 
