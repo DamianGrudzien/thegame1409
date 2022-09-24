@@ -45,18 +45,26 @@ public class Army {
         @Override
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
-            healUnits();
+            next.healUnit(warrior);
         }
 
-        public void healUnits() {
-            Node findHealer = next;
-            Warrior warriorInFront = warrior;
-            while(findHealer != head){
-                if(findHealer.warrior instanceof Healer healer){
-                    healer.heal(warriorInFront);
+//        public void healUnits() {
+//            Node findHealer = next;
+//            Warrior warriorInFront = warrior;
+//            while(findHealer != head){
+//                if(findHealer.warrior instanceof Healer healer){
+//                    healer.heal(warriorInFront);
+//                }
+//                warriorInFront = findHealer.warrior;
+//                findHealer = findHealer.next;
+//            }
+//        }
+        public void healUnit(Warrior wounded){
+            if(next != head) {
+                if (warrior instanceof Healer healer) {
+                    healer.heal(wounded);
                 }
-                warriorInFront = findHealer.warrior;
-                findHealer = findHealer.next;
+                next.healUnit(warrior);
             }
         }
 
