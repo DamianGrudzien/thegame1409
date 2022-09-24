@@ -8,7 +8,7 @@ public class Army {
 
     private class Node
             extends Warrior
-            implements WarriorInArmy{
+            implements WarriorInArmy, HealerInArmy{
         Warrior warrior;
         Node next;
 
@@ -45,6 +45,19 @@ public class Army {
         @Override
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
+            healUnits();
+        }
+
+        public void healUnits() {
+            Node findHealer = next;
+            Warrior warriorInFront = warrior;
+            while(findHealer != head){
+                if(findHealer.warrior instanceof Healer healer){
+                    healer.heal(warriorInFront);
+                }
+                warriorInFront = findHealer.warrior;
+                findHealer = findHealer.next;
+            }
         }
 
         @Override
@@ -92,10 +105,6 @@ public class Army {
     public Army addUnits(Supplier<Warrior> factory, int quantity){
 
         for (int i = 0; i < quantity; i++) {
-//            var warrior = factory.get();
-//            if (!isEmpty()) {
-//                tail.warrior.setNextWarrior(warrior);
-//            }
             addToTail(factory.get());
         }
         return this;
