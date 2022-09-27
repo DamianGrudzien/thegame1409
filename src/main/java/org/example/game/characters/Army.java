@@ -5,17 +5,26 @@ import java.util.function.Supplier;
 
 public class Army {
 
+    public void removeDeadWarriors(){
+        head.next.takeOrder(new RemoveBodiesCommand(head));
+    }
 
-    private class Node
+    protected class Node
             extends Warrior
             implements WarriorInArmy, HealerInArmy{
-        Warrior warrior;
-        Node next;
+        Warrior getWarrior() {
+            return warrior;
+        }
 
+        Warrior warrior;
+
+        Node next;
         public Node(Warrior warrior) {
             this.warrior = warrior;
             this.next = this;
         }
+
+
 
         @Override
         public Warrior getNextBehind() {
@@ -45,26 +54,24 @@ public class Army {
         @Override
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
-            next.healUnit(warrior);
+            next.takeOrder(new HealingCommand());
         }
 
-//        public void healUnits() {
-//            Node findHealer = next;
-//            Warrior warriorInFront = warrior;
-//            while(findHealer != head){
-//                if(findHealer.warrior instanceof Healer healer){
-//                    healer.heal(warriorInFront);
-//                }
-//                warriorInFront = findHealer.warrior;
-//                findHealer = findHealer.next;
-//            }
-//        }
+        @Override
         public void healUnit(Warrior wounded){
+            if (warrior instanceof Healer healer) {
+                healer.heal(wounded);
+            }
             if(next != head) {
-                if (warrior instanceof Healer healer) {
-                    healer.heal(wounded);
-                }
                 next.healUnit(warrior);
+            }
+        }
+
+        public void takeOrder(Command command){
+
+            command.executeCommand(this);
+            if(next != head){
+                next.takeOrder(command);
             }
         }
 
@@ -123,6 +130,8 @@ public class Army {
         return new FirstAliveIterator();
     }
 
+    public Iterator<Warrior> iterator(){return new SimpleIterator();}
+
     private class FirstAliveIterator implements Iterator<Warrior>{
 
         @Override
@@ -140,6 +149,25 @@ public class Army {
             }
             var res = peek();
             return res == head ? null : res;
+        }
+
+    }
+    private class SimpleIterator implements Iterator<Warrior> {
+        Node cursor = head;
+        @Override
+        public boolean hasNext() {
+            return cursor.next != head;
+        }
+
+        @Override
+        public Warrior next() {
+            if(!hasNext()){
+                throw new NoSuchElementException();
+            }
+
+            var res = cursor.next.getWarrior();
+            cursor = cursor.next;
+            return cursor == head ? null : res;
         }
     }
 

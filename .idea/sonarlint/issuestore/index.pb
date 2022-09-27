@@ -9,3 +9,5 @@ g
 7src/main/java/org/example/game/characters/Defender.java,0\f\0fc09b6f58b17ea17ee2fdf565f71f17e81a312a
 f
 6src/main/java/org/example/game/characters/Vampire.java,8\2\8204edd9f02bda31d8f5744ed09b76c2e4eba937
+l
+<src/main/java/org/example/game/characters/WarriorInArmy.java,4\c\4ce8fc8eee25aeee52d8d1429671e80453e0cb71

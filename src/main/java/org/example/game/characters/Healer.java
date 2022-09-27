@@ -1,6 +1,6 @@
 package org.example.game.characters;
 
-public class Healer extends Warrior{
+public class Healer extends Warrior implements HasHealing{
 
     private static final int HEALING_POINT = 2;
 
