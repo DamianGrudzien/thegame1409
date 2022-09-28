@@ -17,7 +17,5 @@ public class RemoveBodiesCommand implements Command{
         } else {
             cursor.next = nextWarrior == head ? head : nextWarrior;
         }
-
-
     }
 }

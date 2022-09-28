@@ -134,7 +134,29 @@ class BattleArmiesTest {
                 // 17. Battle
                 Arguments.of(new Army(Warrior::new,2),
                         new Army(Lancer::new,1)
-                                .addUnits(Warrior::new, 1), false)
+                                .addUnits(Warrior::new, 1), false),
+                // 19. Battle
+                Arguments.of(new Army(Lancer::new,5)
+                                .addUnits(Vampire::new,3)
+                                .addUnits(Warrior::new,4)
+                                .addUnits(Defender::new,2),
+                        new Army(Warrior::new,4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new,4), false),
+
+                Arguments.of(new Army(Lancer::new,7)
+                                .addUnits(Vampire::new,3)
+                                .addUnits(Warrior::new,4)
+                                .addUnits(Defender::new,2),
+                        new Army(Warrior::new,4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new,4), true),
+                Arguments.of(new Army(Lancer::new,4)
+                                .addUnits(Defender::new,2),
+                        new Army(Lancer::new,4)
+                                .addUnits(Defender::new, 2), true)
         );
     }
 

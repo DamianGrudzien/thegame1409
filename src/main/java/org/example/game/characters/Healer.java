@@ -9,7 +9,9 @@ public class Healer extends Warrior implements HasHealing{
     }
 
     public void heal(Warrior woundedWarrior){
-        woundedWarrior.setHealth(woundedWarrior.getHealth() + HEALING_POINT);
+        if(woundedWarrior instanceof WarriorInArmy) {
+            woundedWarrior.setHealth(woundedWarrior.getHealth() + HEALING_POINT);
+        }
     }
 
     @Override

@@ -74,9 +74,17 @@ class BattleFightTest {
         army4.addUnits(Warrior::new, 1);
         army4.addUnits(Lancer::new, 2);
 
+        var army5 = new Army();
+        army5.addUnits(Warrior::new, 10);
+
+        var army6 = new Army();
+        army6.addUnits(Warrior::new, 6);
+        army6.addUnits(Lancer::new, 5);
+
 
         assertTrue(Battle.fight(myArmy, enemyArmy));
         assertFalse(Battle.fight(army3, army4));
+        assertFalse(Battle.straightFight(army5, army6));
     }
 
     @Test

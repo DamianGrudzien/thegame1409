@@ -1,6 +1,7 @@
 package org.example.game;
 
 import org.example.game.characters.Army;
+import org.example.game.characters.Healer;
 import org.example.game.characters.Warrior;
 
 import java.util.Iterator;
@@ -28,22 +29,32 @@ public class Battle {
         Iterator<Warrior> it1 = army1.iterator();
         Iterator<Warrior> it2 = army2.iterator();
 
-        do {
-            while (it1.hasNext() && it2.hasNext()) {
-                fight(it1.next(), it2.next());
+        while (it1.hasNext() && it2.hasNext()) {
+            Warrior warriorArmy1 = it1.next();
+            Warrior warriorArmy2 = it2.next();
+            if(!(warriorArmy1 instanceof Healer) && !(warriorArmy2 instanceof Healer)) {
+                fight(warriorArmy1, warriorArmy2);
             }
-
-            army1.removeDeadWarriors();
-            army2.removeDeadWarriors();
-
-        } while (it1.hasNext() && it2.hasNext());
-
-        if(!army1.firstAlive().hasNext()){
-            return false;
         }
 
-        fight(army1, army2);
-        return it1.hasNext();
+
+        army1.removeDeadWarriors();
+        army2.removeDeadWarriors();
+
+        it1 = army1.iterator();
+        it2 = army2.iterator();
+
+        if(!it1.hasNext()){
+            return false;
+        }
+        else if(!it2.hasNext()){
+            return true;
+        }
+        else {
+            fight(army1, army2);
+        }
+
+        return army1.firstAlive().hasNext();
     }
 
 

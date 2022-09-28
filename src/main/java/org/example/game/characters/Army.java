@@ -5,25 +5,21 @@ import java.util.function.Supplier;
 
 public class Army {
 
-    public void removeDeadWarriors(){
-        head.next.takeOrder(new RemoveBodiesCommand(head));
-    }
-
     protected class Node
             extends Warrior
             implements WarriorInArmy, HealerInArmy{
+
         Warrior getWarrior() {
             return warrior;
         }
-
         Warrior warrior;
 
         Node next;
+
         public Node(Warrior warrior) {
             this.warrior = warrior;
             this.next = this;
         }
-
 
 
         @Override
@@ -79,6 +75,10 @@ public class Army {
         public boolean isAlive() {
             return warrior.isAlive();
         }
+
+    }
+    public void removeDeadWarriors(){
+        head.next.takeOrder(new RemoveBodiesCommand(head));
     }
 
     private final Node head = new Node(null);
@@ -136,8 +136,13 @@ public class Army {
 
         @Override
         public boolean hasNext() {
+
             while(!isEmpty() && !peek().isAlive()){
                 removeFromHead();
+                if(peek() == head) {
+                    tail = head;
+                    break;
+                }
             }
             return !isEmpty();
         }
