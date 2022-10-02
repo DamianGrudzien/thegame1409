@@ -1,9 +1,28 @@
 package org.example.game.characters;
 
+import org.example.game.weapons.WeaponI;
+
 import java.util.*;
 import java.util.function.Supplier;
 
 public class Army {
+    boolean containsWarlord;
+
+//    @Override
+//    public void moveUnits() {
+//        if(this.hasWarlord()){
+//
+//        }
+//    }
+
+//    public void equipWarriorAtPosition(int position, WeaponI weaponI){
+//        var it = iterator();
+//
+//    }
+
+//    private boolean hasWarlord(){
+//        return containsWarlord;
+//    }
 
     protected class Node
             extends Warrior
@@ -78,8 +97,14 @@ public class Army {
 
     }
     public void removeDeadWarriors(){
-        head.next.takeOrder(new RemoveBodiesCommand(head));
+        var it = iterator();
+            while(it.hasNext()) {
+                if(!it.next().isAlive()){
+                    it.remove();
+                }
+            }
     }
+
 
     private final Node head = new Node(null);
     private Node tail = head;
@@ -100,6 +125,7 @@ public class Army {
             tail = head;
         }
         head.next = head.next.next;
+//        this.moveUnits();
     }
 
     private void addToTail(Warrior warrior){
@@ -118,6 +144,17 @@ public class Army {
     }
 
     public Army addUnits(Supplier<Warrior> factory, int quantity){
+//        Warrior warriorFromFactory = factory.get();
+//        if(warriorFromFactory instanceof Warlord warlord){
+//            var it = iterator();
+//            while(it.hasNext()) {
+//                if(it.next().getClass() == warlord.getClass()){
+//                    return this;
+//                }
+//            }
+//            addToTail(warriorFromFactory);
+//            return this;
+//        }
 
         for (int i = 0; i < quantity; i++) {
             addToTail(factory.get());
@@ -139,10 +176,6 @@ public class Army {
 
             while(!isEmpty() && !peek().isAlive()){
                 removeFromHead();
-                if(peek() == head) {
-                    tail = head;
-                    break;
-                }
             }
             return !isEmpty();
         }
@@ -159,6 +192,14 @@ public class Army {
     }
     private class SimpleIterator implements Iterator<Warrior> {
         Node cursor = head;
+        Node prev = null;
+
+        public Warrior getRemovedWarrior() {
+            return removedWarrior;
+        }
+
+        Warrior removedWarrior = null;
+
         @Override
         public boolean hasNext() {
             return cursor.next != head;
@@ -169,10 +210,21 @@ public class Army {
             if(!hasNext()){
                 throw new NoSuchElementException();
             }
-
-            var res = cursor.next.getWarrior();
+            removedWarrior = null;
+            prev = cursor;
             cursor = cursor.next;
-            return cursor == head ? null : res;
+            return cursor.getWarrior();
+        }
+
+        @Override
+        public void remove() {
+            if(prev == null){
+                throw new UnsupportedOperationException("remove");
+            }
+            removedWarrior = cursor.getWarrior();
+            prev.next = cursor.next;
+            cursor = prev;
+            prev = null;
         }
     }
 

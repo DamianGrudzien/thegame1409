@@ -235,7 +235,7 @@ class BattleFightTest {
     private static Stream<Arguments> checkBattleBetweenArmiesSource() {
         return Stream.of(
                 Arguments.of(new Army(Warrior::new, 5).addUnits(Defender::new, 4)
-                                                                          .addUnits(Defender::new, 5),
+                                                      .addUnits(Defender::new, 5),
                                         new Army(Warrior::new, 4), true),
                 Arguments.of(new Army(Defender::new, 5).addUnits(Warrior::new,20)
                                                                            .addUnits(Defender::new,4),

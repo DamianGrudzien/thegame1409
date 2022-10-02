@@ -4,8 +4,6 @@ import org.example.game.characters.Army;
 import org.example.game.characters.Healer;
 import org.example.game.characters.Warrior;
 
-import java.util.Iterator;
-
 public class Battle {
 
     private Battle() {
@@ -26,35 +24,30 @@ public class Battle {
     }
 
     public static boolean straightFight(Army army1, Army army2){
-        Iterator<Warrior> it1 = army1.iterator();
-        Iterator<Warrior> it2 = army2.iterator();
 
-        while (it1.hasNext() && it2.hasNext()) {
-            Warrior warriorArmy1 = it1.next();
-            Warrior warriorArmy2 = it2.next();
-            if(!(warriorArmy1 instanceof Healer) && !(warriorArmy2 instanceof Healer)) {
-                fight(warriorArmy1, warriorArmy2);
+        while(true){
+            var it1 = army1.iterator();
+            var it2 = army2.iterator();
+
+            if (!it1.hasNext()) {
+                return false;
             }
+            if (!it2.hasNext()) {
+                return true;
+            }
+
+            while (it1.hasNext() && it2.hasNext()) {
+                Warrior warriorArmy1 = it1.next();
+                Warrior warriorArmy2 = it2.next();
+                if (!(warriorArmy1 instanceof Healer) && !(warriorArmy2 instanceof Healer)) {
+                    fight(warriorArmy1, warriorArmy2);
+                }
+            }
+
+
+            army1.removeDeadWarriors();
+            army2.removeDeadWarriors();
         }
-
-
-        army1.removeDeadWarriors();
-        army2.removeDeadWarriors();
-
-        it1 = army1.iterator();
-        it2 = army2.iterator();
-
-        if(!it1.hasNext()){
-            return false;
-        }
-        else if(!it2.hasNext()){
-            return true;
-        }
-        else {
-            fight(army1, army2);
-        }
-
-        return army1.firstAlive().hasNext();
     }
 
 
