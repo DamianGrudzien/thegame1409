@@ -18,7 +18,7 @@ public class WarriorWithWeapon extends Warrior implements HasHealingPower, HasDe
 
 
     @Override
-    public int getHealingPower() {
+    public int getHealPower() {
         return Math.max(0, getBaseHealingPower() + getHealingBonus());
     }
 
@@ -34,7 +34,7 @@ public class WarriorWithWeapon extends Warrior implements HasHealingPower, HasDe
             return warriorWithWeapon.getBaseHealingPower();
         }
         if(warrior instanceof HasHealingPower healer){
-            return healer.getHealingPower();
+            return healer.getHealPower();
         }
         return 0;
     }

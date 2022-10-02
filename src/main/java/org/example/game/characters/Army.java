@@ -15,10 +15,17 @@ public class Army {
 //        }
 //    }
 
-//    public void equipWarriorAtPosition(int position, WeaponI weaponI){
-//        var it = iterator();
-//
-//    }
+    public void equipWarriorAtPosition(int position, WeaponI weaponI){
+        var it = iterator();
+        int counter = 0;
+        while(it.hasNext()){
+            if(position == counter++){
+                it.next().equipWeapon(weaponI);
+                break;
+            }
+            it.next();
+        }
+    }
 
 //    private boolean hasWarlord(){
 //        return containsWarlord;

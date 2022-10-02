@@ -2,8 +2,8 @@ package org.example.game.characters;
 
 public class Healer extends Warrior implements HasHealing{
 
-    private int healingPower = 2;
-    private int healingStamina = 50;
+    private int healPower = 2;
+    private int healingStamina = 500;
 
     public Healer() {
         super(60, 0);
@@ -11,19 +11,19 @@ public class Healer extends Warrior implements HasHealing{
 
     public void heal(Warrior woundedWarrior){
         if(woundedWarrior instanceof WarriorInArmy && healingStamina > 0) {
-            woundedWarrior.setHealth(woundedWarrior.getHealth() + healingPower);
+            woundedWarrior.setHealth(woundedWarrior.getHealth() + healPower);
             healingStamina--;
         }
     }
 
 
-    public void setHealingPower(int healingPower) {
-        this.healingPower = healingPower;
+    public void setHealPower(int healPower) {
+        this.healPower = healPower;
     }
 
     @Override
-    public int getHealingPower() {
-        return healingPower;
+    public int getHealPower() {
+        return healPower;
     }
 
     @Override
