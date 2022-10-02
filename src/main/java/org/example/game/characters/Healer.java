@@ -3,14 +3,14 @@ package org.example.game.characters;
 public class Healer extends Warrior implements HasHealing{
 
     private int healPower = 2;
-    private int healingStamina = 500;
+    private int healingStamina = 50;
 
     public Healer() {
         super(60, 0);
     }
 
     public void heal(Warrior woundedWarrior){
-        if(woundedWarrior instanceof WarriorInArmy && healingStamina > 0) {
+        if((woundedWarrior instanceof WarriorInArmy) && (healingStamina) > 0) {
             woundedWarrior.setHealth(woundedWarrior.getHealth() + healPower);
             healingStamina--;
         }

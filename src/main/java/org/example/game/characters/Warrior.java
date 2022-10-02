@@ -20,7 +20,7 @@ public class Warrior extends AbstractWarrior implements HasWeapon{
         this.attack = attack;
     }
 
-    WarriorWithWeapon warriorWithWeapon;
+    private WarriorWithWeapon warriorWithWeapon;
 
 
     private void setInitialHealth(int health) {

@@ -39,7 +39,7 @@ public class Battle {
             while (it1.hasNext() && it2.hasNext()) {
                 Warrior warriorArmy1 = it1.next();
                 Warrior warriorArmy2 = it2.next();
-                if (!(warriorArmy1 instanceof Healer) && !(warriorArmy2 instanceof Healer)) {
+                if (!((warriorArmy1 instanceof Healer) && (warriorArmy2 instanceof Healer))) {
                     fight(warriorArmy1, warriorArmy2);
                 }
             }

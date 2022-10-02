@@ -1,10 +1,15 @@
 package org.example.game.characters;
 
 public class Defender extends Warrior implements HasDefense{
-    private int defense = 2;
+    protected int defense = 2;
 
     public Defender(){
         super(60,3);
+    }
+
+    protected Defender(int health, int attack, int defense){
+        super(health, attack);
+        this.defense = defense;
     }
 
     public int getDefense(){

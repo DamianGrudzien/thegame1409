@@ -13,6 +13,159 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BattleArmiesTest {
 
+    private static Stream<Arguments> checkBattleBetweenArmiesSource() {
+        return Stream.of(
+                Arguments.of(new Army(Warrior::new, 1), new Army(Warrior::new, 2), false),
+                Arguments.of(new Army(Warrior::new, 2), new Army(Warrior::new, 3), false),
+                Arguments.of(new Army(Warrior::new, 5), new Army(Warrior::new, 7), false),
+                Arguments.of(new Army(Warrior::new, 20), new Army(Warrior::new, 21), true),
+                Arguments.of(new Army(Warrior::new, 10), new Army(Warrior::new, 11), true),
+                Arguments.of(new Army(Warrior::new, 11), new Army(Warrior::new, 7), true),
+                Arguments.of(new Army(Warrior::new, 5)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Defender::new, 5),
+                        new Army(Warrior::new, 4), true),
+                // 8. Battle
+                Arguments.of(new Army(Defender::new, 5)
+                                .addUnits(Warrior::new, 20)
+                                .addUnits(Defender::new, 4),
+                        new Army(Warrior::new, 21), true),
+                // 9. Battle
+                Arguments.of(new Army(Warrior::new, 10)
+                                .addUnits(Defender::new, 5)
+                                .addUnits(Defender::new, 10),
+                        new Army(Warrior::new, 5), true),
+                // 10. Battle
+                Arguments.of(new Army(Defender::new, 2)
+                                .addUnits(Warrior::new, 1)
+                                .addUnits(Defender::new, 1),
+                        new Army(Warrior::new, 5), false),
+                // 11. Battle
+                Arguments.of(new Army(Defender::new, 5)
+                                .addUnits(Vampire::new, 6)
+                                .addUnits(Warrior::new, 7),
+                        new Army(Warrior::new, 6)
+                                .addUnits(Defender::new, 6)
+                                .addUnits(Vampire::new, 6), false),
+                // 12. Battle
+                Arguments.of(new Army(Defender::new, 2)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 4),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 3), false),
+                // 13. Battle
+                Arguments.of(new Army(Defender::new, 11)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 4),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 13), true),
+                // 14. Battle
+                Arguments.of(new Army(Defender::new, 9)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 8),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 13), true),
+                // 15. Battle
+                Arguments.of(new Army(Lancer::new, 5)
+                                .addUnits(Vampire::new, 4)
+                                .addUnits(Warrior::new, 5)
+                                .addUnits(Warrior::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 6)
+                                .addUnits(Lancer::new, 5), false),
+                // 16. Battle
+                Arguments.of(new Army(Lancer::new, 7)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 4)
+                                .addUnits(Defender::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 6)
+                                .addUnits(Lancer::new, 4), true),
+                // 17. Battle
+                Arguments.of(new Army(Warrior::new, 2),
+                        new Army(Lancer::new, 1)
+                                .addUnits(Warrior::new, 1), false),
+                // 19. Battle
+                Arguments.of(new Army(Lancer::new, 5)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 4)
+                                .addUnits(Defender::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 6)
+                                .addUnits(Lancer::new, 4), false),
+
+                Arguments.of(new Army(Lancer::new, 7)
+                                .addUnits(Vampire::new, 3)
+                                .addUnits(Warrior::new, 4)
+                                .addUnits(Defender::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Vampire::new, 6)
+                                .addUnits(Lancer::new, 4), true),
+                Arguments.of(new Army(Lancer::new, 4)
+                                .addUnits(Defender::new, 2),
+                        new Army(Lancer::new, 4)
+                                .addUnits(Defender::new, 2), true)
+        );
+    }
+
+    private static Stream<Arguments> checkBattleBetweenArmiesStraightFightSource() {
+        return Stream.of(
+                // 19.
+                Arguments.of(new Army(Lancer::new,5)
+                                .addUnits(Vampire::new,3)
+                                .addUnits(Warrior::new,4)
+                                .addUnits(Defender::new,2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new, 5)
+                        , false),
+                //20.
+                Arguments.of(new Army(Lancer::new,7)
+                                .addUnits(Vampire::new,3)
+                                .addUnits(Warrior::new,4)
+                                .addUnits(Defender::new,2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new, 4)
+                        , true),
+                //21.
+                Arguments.of(new Army(Lancer::new,7)
+                        .addUnits(Vampire::new,3)
+                        .addUnits(Healer::new,1)
+                        .addUnits(Warrior::new,4)
+                        .addUnits(Healer::new,1)
+                        .addUnits(Defender::new,2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new, 4)
+                        , false),
+                //22.
+                Arguments.of(new Army(Lancer::new,4)
+                                .addUnits(Warrior::new,3)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Warrior::new,4)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Knight::new,2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new,4)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Vampire::new,2)
+                                .addUnits(Lancer::new, 4)
+                        , true)
+        );
+    }
+
     @Test
     @DisplayName("Smoke test")
     void smokeTest() {
@@ -47,6 +200,17 @@ class BattleArmiesTest {
         assertFalse(Battle.fight(army3, army4));
     }
 
+
+    @ParameterizedTest
+    @MethodSource("checkBattleBetweenArmiesStraightFightSource")
+    void checkBattleBetweenArmiesStraightFight(Army army1, Army army2, boolean expected) {
+        // When
+        var res = Battle.straightFight(army1, army2);
+
+        // Then
+        assertEquals(res, expected);
+    }
+
     @ParameterizedTest
     @MethodSource("checkBattleBetweenArmiesSource")
     void checkBattleBetweenArmies(Army army1, Army army2, boolean expected) {
@@ -57,107 +221,23 @@ class BattleArmiesTest {
         assertEquals(res, expected);
     }
 
-    private static Stream<Arguments> checkBattleBetweenArmiesSource() {
-        return Stream.of(
-                Arguments.of(new Army(Warrior::new, 1), new Army(Warrior::new, 2), false),
-                Arguments.of(new Army(Warrior::new, 2), new Army(Warrior::new, 3), false),
-                Arguments.of(new Army(Warrior::new, 5), new Army(Warrior::new, 7), false),
-                Arguments.of(new Army(Warrior::new, 20), new Army(Warrior::new, 21), true),
-                Arguments.of(new Army(Warrior::new, 10), new Army(Warrior::new, 11), true),
-                Arguments.of(new Army(Warrior::new, 11), new Army(Warrior::new, 7), true),
-                Arguments.of(new Army(Warrior::new,5)
-                                        .addUnits(Defender::new,4)
-                                        .addUnits(Defender::new,5),
-                            new Army(Warrior::new,4), true),
-                // 8. Battle
-                Arguments.of(new Army(Defender::new,5)
-                                .addUnits(Warrior::new,20)
-                                .addUnits(Defender::new,4),
-                        new Army(Warrior::new,21), true),
-                // 9. Battle
-                Arguments.of(new Army(Warrior::new,10)
-                                .addUnits(Defender::new,5)
-                                .addUnits(Defender::new,10),
-                        new Army(Warrior::new,5), true),
-                // 10. Battle
-                Arguments.of(new Army(Defender::new,2)
-                                .addUnits(Warrior::new,1)
-                                .addUnits(Defender::new,1),
-                        new Army(Warrior::new,5), false),
-                // 11. Battle
-                Arguments.of(new Army(Defender::new,5)
-                                .addUnits(Vampire::new,6)
-                                .addUnits(Warrior::new,7),
-                        new Army(Warrior::new,6)
-                                .addUnits(Defender::new,6)
-                                .addUnits(Vampire::new,6), false),
-                // 12. Battle
-                Arguments.of(new Army(Defender::new,2)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,4),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,3), false),
-                // 13. Battle
-                Arguments.of(new Army(Defender::new,11)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,4),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,13), true),
-                // 14. Battle
-                Arguments.of(new Army(Defender::new,9)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,8),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,13), true),
-                // 15. Battle
-                Arguments.of(new Army(Lancer::new,5)
-                                .addUnits(Vampire::new,4)
-                                .addUnits(Warrior::new,5)
-                                .addUnits(Warrior::new,2),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,6)
-                                .addUnits(Lancer::new,5), false),
-                // 16. Battle
-                Arguments.of(new Army(Lancer::new,7)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,4)
-                                .addUnits(Defender::new,2),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,6)
-                                .addUnits(Lancer::new,4), true),
-                // 17. Battle
-                Arguments.of(new Army(Warrior::new,2),
-                        new Army(Lancer::new,1)
-                                .addUnits(Warrior::new, 1), false),
-                // 19. Battle
-                Arguments.of(new Army(Lancer::new,5)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,4)
-                                .addUnits(Defender::new,2),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,6)
-                                .addUnits(Lancer::new,4), false),
+    @Test
+    @DisplayName("Battle 23.")
+    void battle23() {
+        Army myArmy=  new Army(Warlord::new,1)
+                        .addUnits(Warrior::new,2)
+                        .addUnits(Lancer::new,2)
+                        .addUnits(Healer::new,2);
 
-                Arguments.of(new Army(Lancer::new,7)
-                                .addUnits(Vampire::new,3)
-                                .addUnits(Warrior::new,4)
-                                .addUnits(Defender::new,2),
-                        new Army(Warrior::new,4)
-                                .addUnits(Defender::new,4)
-                                .addUnits(Vampire::new,6)
-                                .addUnits(Lancer::new,4), true),
-                Arguments.of(new Army(Lancer::new,4)
-                                .addUnits(Defender::new,2),
-                        new Army(Lancer::new,4)
-                                .addUnits(Defender::new, 2), true)
-        );
+        Army enemyArmy = new Army(Warlord::new, 1)
+                        .addUnits(Vampire::new,1)
+                        .addUnits(Healer::new,2)
+                        .addUnits(Knight::new, 2);
+
+        myArmy.moveUnits();
+        enemyArmy.moveUnits();
+
+        assertTrue(Battle.fight(myArmy, enemyArmy));
     }
-
 
 }
