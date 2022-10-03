@@ -211,7 +211,7 @@ public class Army implements WarlordInArmy {
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
             next.takeOrder(new HealingCommand());
-            next.takeOrder(new ArcherCommand(defender));
+//            next.takeOrder(new ArcherCommand(defender));
         }
 
         @Override

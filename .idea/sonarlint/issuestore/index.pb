@@ -11,10 +11,6 @@ k
 ;src/main/java/org/example/game/characters/HasVampirism.java,6\b\6ba0e70a2967e71772d9f0845117849d1f2314d5
 h
 8src/main/java/org/example/game/characters/HasWeapon.java,f\4\f4047ad02d3c1a1f626dd4b26b8d39666e38d602
-S
-#src/main/java/org/example/Main.java,0\b\0ba1b9c7a4878802f938e331cc2d8a042087ec6b
-7
-pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 e
 5src/test/java/org/example/game/characters/Rookie.java,6\e\6e69a8eacb1378fe9dfad7acb5d541dda00e1022
 h
