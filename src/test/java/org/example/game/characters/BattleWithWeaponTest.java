@@ -241,7 +241,7 @@ class BattleWithWeaponTest {
         enemyArmy.equipWarriorAtPosition(2,weapon2);
 
         //Then
-        assertFalse(Battle.fight(myArmy,enemyArmy));
+        assertFalse(Battle.straightFight(myArmy,enemyArmy));
     }
 
     @Test
@@ -263,7 +263,7 @@ class BattleWithWeaponTest {
         enemyArmy.equipWarriorAtPosition(2,weapon2);
 
         //Then
-        assertTrue(Battle.fight(myArmy,enemyArmy));
+        assertTrue(Battle.straightFight(myArmy,enemyArmy));
     }
 
     @Test
@@ -284,8 +284,7 @@ class BattleWithWeaponTest {
         enemyArmy.equipWarriorAtPosition(1,weapon1);
 
         //Then
-        // Wrong assertion in original code
-        assertFalse(Battle.fight(myArmy,enemyArmy));
+        assertFalse(Battle.straightFight(myArmy,enemyArmy));
     }
 
     @Test
@@ -306,8 +305,7 @@ class BattleWithWeaponTest {
         enemyArmy.equipWarriorAtPosition(1,weapon2);
 
         //Then
-        // Wrong assertion in original code
-        assertFalse(Battle.fight(myArmy,enemyArmy));
+        assertFalse(Battle.straightFight(myArmy,enemyArmy));
     }
 
 }

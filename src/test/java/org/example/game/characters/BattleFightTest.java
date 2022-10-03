@@ -14,6 +14,32 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BattleFightTest {
 
+    private static Stream<Arguments> checkFightResults() {
+        return Stream.of(
+                Arguments.of(new Warrior(), new Warrior(), true),
+                Arguments.of(new Knight(), new Warrior(), true),
+                Arguments.of(new Knight(), new Knight(), true),
+                Arguments.of(new Warrior(), new Knight(), false)
+        );
+    }
+
+    private static Stream<Arguments> checkBattleBetweenArmiesSource() {
+        return Stream.of(
+                Arguments.of(new Army(Warrior::new, 5).addUnits(Defender::new, 4)
+                                                      .addUnits(Defender::new, 5),
+                        new Army(Warrior::new, 4), true),
+                Arguments.of(new Army(Defender::new, 5).addUnits(Warrior::new, 20)
+                                                       .addUnits(Defender::new, 4),
+                        new Army(Warrior::new, 21), true),
+                Arguments.of(new Army(Warrior::new, 10).addUnits(Defender::new, 5)
+                                                       .addUnits(Defender::new, 10),
+                        new Army(Warrior::new, 5), true),
+                Arguments.of(new Army(Defender::new, 2).addUnits(Warrior::new, 1)
+                                                       .addUnits(Defender::new, 1),
+                        new Army(Warrior::new, 5), false)
+        );
+    }
+
     @Test
     @DisplayName("Smoke Test")
     void smokeTest() {
@@ -46,7 +72,7 @@ class BattleFightTest {
         assertFalse(Battle.fight(bob, mike));
         assertTrue(Battle.fight(lancelot, rog));
         assertTrue(Battle.fight(lancelot, rocky));
-        assertEquals(60,tiger.getHealth());
+        assertEquals(60, tiger.getHealth());
         assertFalse(Battle.fight(eric, richard));
         assertTrue(Battle.fight(ogre, adam));
         assertTrue(Battle.fight(freelancer, vampire));
@@ -109,13 +135,13 @@ class BattleFightTest {
         myArmy.addUnits(Lancer::new, 1);
 
         var enemyArmy = new Army();
-        enemyArmy.addUnits(() -> jack, 1).addUnits(() -> john, 1);
+        enemyArmy.addUnits(() -> jack, 1)
+                 .addUnits(() -> john, 1);
 
         assertFalse(Battle.fight(myArmy, enemyArmy));
         assertEquals(11, john.getHealth());
 
     }
-
 
     @Test
     @DisplayName("1. Fight")
@@ -213,15 +239,6 @@ class BattleFightTest {
         assertEquals(res, expected);
     }
 
-    private static Stream<Arguments> checkFightResults() {
-        return Stream.of(
-                Arguments.of(new Warrior(), new Warrior(), true),
-                Arguments.of(new Knight(), new Warrior(), true),
-                Arguments.of(new Knight(), new Knight(), true),
-                Arguments.of(new Warrior(), new Knight(), false)
-        );
-    }
-
     @ParameterizedTest
     @MethodSource("checkBattleBetweenArmiesSource")
     void checkBattleBetweenArmies(Army army1, Army army2, boolean expected) {
@@ -230,23 +247,6 @@ class BattleFightTest {
 
         // Then
         assertEquals(res, expected);
-    }
-
-    private static Stream<Arguments> checkBattleBetweenArmiesSource() {
-        return Stream.of(
-                Arguments.of(new Army(Warrior::new, 5).addUnits(Defender::new, 4)
-                                                      .addUnits(Defender::new, 5),
-                                        new Army(Warrior::new, 4), true),
-                Arguments.of(new Army(Defender::new, 5).addUnits(Warrior::new,20)
-                                                                           .addUnits(Defender::new,4),
-                        new Army(Warrior::new, 21), true),
-                Arguments.of(new Army(Warrior::new, 10).addUnits(Defender::new,5)
-                                                       .addUnits(Defender::new,10),
-                        new Army(Warrior::new, 5), true),
-                Arguments.of(new Army(Defender::new, 2).addUnits(Warrior::new,1)
-                                                       .addUnits(Defender::new,1),
-                        new Army(Warrior::new, 5), false)
-        );
     }
 
 }

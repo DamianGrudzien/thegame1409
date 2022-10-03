@@ -39,8 +39,6 @@ b
 2src/main/java/org/example/game/weapons/Weapon.java,3\c\3c90175f6e2ba3fe2fda4b98682e78ce25496efd
 f
 6src/main/java/org/example/game/characters/Vampire.java,8\2\8204edd9f02bda31d8f5744ed09b76c2e4eba937
-s
-Csrc/test/java/org/example/game/characters/BattleWithWeaponTest.java,b\8\b805e8d515237f9ca34694ed7582f2f79893d5b6
 p
 @src/main/java/org/example/game/characters/WarriorWithWeapon.java,9\6\96d459d717f8eb732142e2987242bd220aedc340
 c
