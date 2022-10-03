@@ -13,6 +13,7 @@ public class Warlord extends Defender{
 
     Iterator<Warrior> rearrangeArmy(Iterator<Warrior> iterator) {
 
+
         LinkedList<Lancer> lancers = new LinkedList<>();
         LinkedList<Healer> healers = new LinkedList<>();
         LinkedList<Warrior> warriors = new LinkedList<>();

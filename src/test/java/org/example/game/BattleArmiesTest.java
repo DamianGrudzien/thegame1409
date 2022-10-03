@@ -87,9 +87,29 @@ class BattleArmiesTest {
                                 .addUnits(Vampire::new, 6)
                                 .addUnits(Lancer::new, 4), true),
                 // 17. Battle
-                Arguments.of(new Army(Warrior::new, 2),
-                        new Army(Lancer::new, 1)
-                                .addUnits(Warrior::new, 1), false),
+                Arguments.of(new Army(Lancer::new, 7)
+                                .addUnits(Vampire::new,3)
+                                .addUnits(Healer::new, 1)
+                                .addUnits(Warrior::new, 4)
+                                .addUnits(Healer::new, 1)
+                                .addUnits(Defender::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new, 4), true),
+                // 18. Battle
+                Arguments.of(new Army(Lancer::new, 1)
+                                .addUnits(Warrior::new,3)
+                                .addUnits(Healer::new, 1)
+                                .addUnits(Warrior::new, 4)
+                                .addUnits(Healer::new, 1)
+                                .addUnits(Knight::new, 2),
+                        new Army(Warrior::new, 4)
+                                .addUnits(Defender::new, 4)
+                                .addUnits(Healer::new,1)
+                                .addUnits(Vampire::new,6)
+                                .addUnits(Lancer::new, 4), false),
                 // 19. Battle
                 Arguments.of(new Army(Lancer::new, 5)
                                 .addUnits(Vampire::new, 3)
@@ -98,20 +118,8 @@ class BattleArmiesTest {
                         new Army(Warrior::new, 4)
                                 .addUnits(Defender::new, 4)
                                 .addUnits(Vampire::new, 6)
-                                .addUnits(Lancer::new, 4), false),
+                                .addUnits(Lancer::new, 4), false)
 
-                Arguments.of(new Army(Lancer::new, 7)
-                                .addUnits(Vampire::new, 3)
-                                .addUnits(Warrior::new, 4)
-                                .addUnits(Defender::new, 2),
-                        new Army(Warrior::new, 4)
-                                .addUnits(Defender::new, 4)
-                                .addUnits(Vampire::new, 6)
-                                .addUnits(Lancer::new, 4), true),
-                Arguments.of(new Army(Lancer::new, 4)
-                                .addUnits(Defender::new, 2),
-                        new Army(Lancer::new, 4)
-                                .addUnits(Defender::new, 2), true)
         );
     }
 
@@ -198,6 +206,20 @@ class BattleArmiesTest {
 
         assertTrue(Battle.fight(myArmy, enemyArmy));
         assertFalse(Battle.fight(army3, army4));
+
+
+        Army newArmy1 = new Army(Lancer::new, 5)
+                .addUnits(Vampire::new, 4)
+                .addUnits(Warrior::new, 5)
+                .addUnits(Warrior::new, 2);
+
+        Army enemyArmy1 = new Army(Warrior::new, 4)
+                        .addUnits(Defender::new, 4)
+                        .addUnits(Vampire::new, 6)
+                        .addUnits(Lancer::new, 5);
+
+        assertFalse(Battle.fight(newArmy1,enemyArmy1));
+
     }
 
 

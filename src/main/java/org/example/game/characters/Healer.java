@@ -3,7 +3,7 @@ package org.example.game.characters;
 public class Healer extends Warrior implements HasHealing{
 
     private int healPower = 2;
-    private int healingStamina = 50;
+    private int healingStamina = 500;
 
     public Healer() {
         super(60, 0);

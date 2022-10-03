@@ -163,9 +163,9 @@ public class Army implements WarlordInArmy {
         head.prev = tail;
     }
 
-    protected class Node
+    private class Node
             extends Warrior
-            implements WarriorInArmy, HealerInArmy {
+            implements WarriorInArmy {
 
         Warrior warrior;
         Node next;
@@ -180,6 +180,11 @@ public class Army implements WarlordInArmy {
         @Override
         public Warrior getNextBehind() {
             return (next != head) ? next : null;
+        }
+
+        @Override
+        public Warrior getPrevFront() {
+            return prev != head ? prev : head;
         }
 
         @Override
@@ -206,18 +211,10 @@ public class Army implements WarlordInArmy {
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
             next.takeOrder(new HealingCommand());
+            next.takeOrder(new ArcherCommand(defender));
         }
 
         @Override
-        public void healUnit(Warrior wounded) {
-            if (warrior instanceof Healer healer) {
-                healer.heal(wounded);
-            }
-            if (next != head) {
-                next.healUnit(warrior);
-            }
-        }
-
         public void takeOrder(Command command) {
 
             command.executeCommand(this);
@@ -231,10 +228,9 @@ public class Army implements WarlordInArmy {
             return warrior.isAlive();
         }
 
-        Warrior getWarrior() {
+        public Warrior getWarrior() {
             return warrior;
         }
-
     }
 
     private class FirstAliveIterator implements Iterator<Warrior> {

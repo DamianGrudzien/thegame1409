@@ -1,16 +1,8 @@
 
-k
-;src/main/java/org/example/game/characters/HealerInArmy.java,9\8\9885d6f5024456b1cbdd02d3124c1168f5ef644e
-o
-?src/main/java/org/example/game/characters/CanReceiveDamage.java,c\b\cb3798b6a0956715c4364bd580e7ae5cdffe3465
 `
 0src/main/java/org/example/game/SimpleDamage.java,6\3\63baaf40cdc286e3f6f0573d81510f60c134a7b9
 Z
 *src/main/java/org/example/game/Damage.java,3\f\3ff2ffad4182c5901bf244bebca93b64fa0e47b7
-h
-8src/main/java/org/example/game/characters/HasAttack.java,0\a\0a429eef56b3594310d5d160a70d2be843f36d17
-l
-<src/main/java/org/example/game/characters/WarriorInArmy.java,4\c\4ce8fc8eee25aeee52d8d1429671e80453e0cb71
 i
 9src/main/java/org/example/game/characters/HasDefense.java,8\b\8b5aa3499e19dc7755632cd8f16645a2a45a26d0
 i
@@ -27,8 +19,6 @@ e
 5src/test/java/org/example/game/characters/Rookie.java,6\e\6e69a8eacb1378fe9dfad7acb5d541dda00e1022
 h
 8src/main/java/org/example/game/characters/HasHealth.java,c\9\c97508f813dbc33bb0aaf7646e5619d270b1282d
-e
-5src/main/java/org/example/game/characters/Lancer.java,4\b\4b7f8b231b79afc0cf50e397ac11e692181c7d40
 n
 >src/main/java/org/example/game/characters/AbstractWarrior.java,f\3\f3f05155822899e292e512ae40c3ffd668b21f3a
 n
