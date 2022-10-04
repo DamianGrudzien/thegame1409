@@ -1,7 +1,8 @@
 package org.example.game.characters;
 
-public class Vampire extends Warrior{
-    private static final int VAMPIRISM = 50;
+public class Vampire extends Warrior implements KnowsDamageDealt, HasVampirism{
+
+    private int vampirism = 50;
 
 
     public Vampire() {
@@ -16,14 +17,18 @@ public class Vampire extends Warrior{
 
     @Override
     public void hit(CanReceiveDamage defender) {
-        int healthBefore = defender.getHealth();
-        super.hit(defender);
-        int healthAfter = defender.getHealth();
-        int healthDiff = healthBefore - healthAfter;
-
-
+        int damageDealt = hitAndReportDamage(defender);
         final int percents = 100;
-        setHealth(getHealth() +  (healthDiff * VAMPIRISM) / percents);
+        setHealth(getHealth() +  (damageDealt * getVampirism()) / percents);
     }
 
+    @Override
+    public int getVampirism() {
+        return vampirism;
+    }
+
+
+    public void setVampirism(int vampirism) {
+        this.vampirism = vampirism;
+    }
 }
