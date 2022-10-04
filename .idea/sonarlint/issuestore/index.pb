@@ -1,22 +1,4 @@
 
-i
-9src/main/java/org/example/game/characters/HasDefense.java,8\b\8b5aa3499e19dc7755632cd8f16645a2a45a26d0
-i
-9src/main/java/org/example/game/characters/HasHealing.java,e\6\e6e3f1eba8b30bd26edf446a34c12dc643b8f454
-k
-;src/main/java/org/example/game/characters/HasVampirism.java,6\b\6ba0e70a2967e71772d9f0845117849d1f2314d5
-h
-8src/main/java/org/example/game/characters/HasWeapon.java,f\4\f4047ad02d3c1a1f626dd4b26b8d39666e38d602
-e
-5src/test/java/org/example/game/characters/Rookie.java,6\e\6e69a8eacb1378fe9dfad7acb5d541dda00e1022
-h
-8src/main/java/org/example/game/characters/HasHealth.java,c\9\c97508f813dbc33bb0aaf7646e5619d270b1282d
-n
->src/main/java/org/example/game/characters/AbstractWarrior.java,f\3\f3f05155822899e292e512ae40c3ffd668b21f3a
-n
->src/main/java/org/example/game/characters/HasHealingPower.java,1\2\12cf34d6546719c90a5cc9be2d44d5cd658caab8
-e
-5src/main/java/org/example/game/characters/Knight.java,6\a\6af763e2dcc88c3631bb6b865ca86b26ddf66707
 f
 6src/main/java/org/example/game/characters/Vampire.java,8\2\8204edd9f02bda31d8f5744ed09b76c2e4eba937
 p

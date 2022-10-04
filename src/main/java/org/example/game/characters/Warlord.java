@@ -15,6 +15,7 @@ public class Warlord extends Defender {
         List<Lancer> lancers = new LinkedList<>();
         List<Healer> healers = new LinkedList<>();
         List<Warrior> warriors = new LinkedList<>();
+        List<Archer> archers = new LinkedList<>();
 
         LinkedList<Warrior> newWarriorsLine = new LinkedList<>();
 
@@ -24,13 +25,16 @@ public class Warlord extends Defender {
                 lancers.add(lancer);
             } else if(nextWarrior instanceof Healer healer){
                 healers.add(healer);
+            } else if(nextWarrior instanceof Archer archer){
+                archers.add(archer);
             } else if(!(nextWarrior instanceof Warlord)){
                 warriors.add(nextWarrior);
             }
         }
         newWarriorsLine.addAll(lancers);
-        newWarriorsLine.addAll(Math.min(newWarriorsLine.size(),1), healers);
         newWarriorsLine.addAll(warriors);
+        newWarriorsLine.addAll(archers);
+        newWarriorsLine.addAll(Math.min(newWarriorsLine.size(),1), healers);
         newWarriorsLine.add(this);
 
         return newWarriorsLine.iterator();

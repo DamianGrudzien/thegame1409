@@ -16,12 +16,14 @@ public class Lancer extends Warrior implements KnowsDamageDealt {
     @Override
     public void hit(CanReceiveDamage defender) {
         int damageDealt = hitAndReportDamage(defender);
-        if (defender instanceof WarriorInArmy unitInArmy) {
+        if (defender instanceof WarriorInArmy defenderInArmy) {
             for (int i = 1; i < RANGE_OF_LANCE; i++) {
-                hitWarriorBehind(damageDealt, unitInArmy);
 
-                if (unitInArmy.getNextBehind() != null) {
-                    unitInArmy = (WarriorInArmy) unitInArmy.getNextBehind();
+                var secondDefender = defenderInArmy.getNextBehind();
+                if (secondDefender != null) {
+                    int damageToSecond = ((damageDealt * PENETRATION) / 100);
+                    secondDefender.receiveDamage(() -> damageToSecond);
+                    defenderInArmy = (WarriorInArmy) defenderInArmy.getNextBehind();
                 } else {
                     break;
                 }
@@ -29,11 +31,4 @@ public class Lancer extends Warrior implements KnowsDamageDealt {
         }
     }
 
-    private void hitWarriorBehind(int damageDealt, WarriorInArmy unitInArmy) {
-        var theSecondWarrior = unitInArmy.getNextBehind();
-        if (theSecondWarrior != null) {
-            int damageToSecond = ((damageDealt * PENETRATION) / 100);
-            theSecondWarrior.receiveDamage(() -> damageToSecond);
-        }
-    }
 }
