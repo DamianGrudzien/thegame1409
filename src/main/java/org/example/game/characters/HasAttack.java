@@ -1,6 +1,6 @@
 package org.example.game.characters;
 
-interface HasAttack {
+public interface HasAttack {
     int getAttack();
 
     default void hit(CanReceiveDamage defender) {

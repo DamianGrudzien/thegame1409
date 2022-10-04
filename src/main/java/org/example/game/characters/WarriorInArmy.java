@@ -1,5 +1,8 @@
 package org.example.game.characters;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public interface WarriorInArmy {
     Warrior getNextBehind();
 
@@ -24,18 +27,26 @@ class HealingCommand implements Command {
             healer.heal(warriorInFront);
         }
     }
+}
 
-    class ArcherCommand implements Command {
-        CanReceiveDamage defender;
+class ArcherCommand implements Command {
 
-        public ArcherCommand(CanReceiveDamage defender) {
-            this.defender = defender;
-        }
+    static Logger log = LoggerFactory.getLogger(ArcherCommand.class);
+    CanReceiveDamage defender;
 
-        @Override
-        public void executeCommand(WarriorInArmy warriorNode) {
-            if(defender instanceof WarriorInArmy defenderInArmy){
-                System.out.println((defenderInArmy.getWarrior()));
+    public ArcherCommand(CanReceiveDamage defender) {
+        this.defender = defender;
+    }
+
+    @Override
+    public void executeCommand(WarriorInArmy warriorNode) {
+        if ((defender instanceof WarriorInArmy defenderInArmy)
+                && (warriorNode.getWarrior() instanceof Archer archer)) {
+
+            archer.hitWithBow(defender);
+            log.info("{}", defender.getClass().getSimpleName());
+            if (defenderInArmy.getNextBehind() != null) {
+                defender = defenderInArmy.getNextBehind();
             }
         }
     }

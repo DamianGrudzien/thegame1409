@@ -1,7 +1,9 @@
 package org.example.game.weapons;
 
 
-public interface WeaponI {
+import org.example.game.characters.HasAttack;
+
+public interface WeaponI extends HasAttack {
 
     int getHealth();
 
@@ -53,11 +55,9 @@ public interface WeaponI {
                      .build();
     }
 
-    static Weapon newTestWeapon() {
+    static Weapon newBow() {
         return Weapon.builder()
-                     .health(0)
-                     .attack(-8)
-                     .healPower(3)
+                     .attack(4)
                      .build();
     }
 }

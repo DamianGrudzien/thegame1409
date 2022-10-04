@@ -1,8 +1,4 @@
 
-`
-0src/main/java/org/example/game/SimpleDamage.java,6\3\63baaf40cdc286e3f6f0573d81510f60c134a7b9
-Z
-*src/main/java/org/example/game/Damage.java,3\f\3ff2ffad4182c5901bf244bebca93b64fa0e47b7
 i
 9src/main/java/org/example/game/characters/HasDefense.java,8\b\8b5aa3499e19dc7755632cd8f16645a2a45a26d0
 i
@@ -21,11 +17,7 @@ n
 >src/main/java/org/example/game/characters/HasHealingPower.java,1\2\12cf34d6546719c90a5cc9be2d44d5cd658caab8
 e
 5src/main/java/org/example/game/characters/Knight.java,6\a\6af763e2dcc88c3631bb6b865ca86b26ddf66707
-b
-2src/main/java/org/example/game/weapons/Weapon.java,3\c\3c90175f6e2ba3fe2fda4b98682e78ce25496efd
 f
 6src/main/java/org/example/game/characters/Vampire.java,8\2\8204edd9f02bda31d8f5744ed09b76c2e4eba937
 p
 @src/main/java/org/example/game/characters/WarriorWithWeapon.java,9\6\96d459d717f8eb732142e2987242bd220aedc340
-c
-3src/main/java/org/example/game/weapons/WeaponI.java,c\a\ca464b375ff03b037a73e25a11bb9d72dd5a0652

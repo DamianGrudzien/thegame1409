@@ -6,10 +6,11 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.function.Supplier;
 
-public class Army implements WarlordInArmy {
+public class Army {
 
     private final Node head = new Node(null);
-    Warlord warlord;
+    private Warlord warlord;
+    private int size;
     private Node tail = head;
 
     public Army() {
@@ -19,28 +20,21 @@ public class Army implements WarlordInArmy {
         addUnits(factory, quantity);
     }
 
-    @Override
+//    @Override
     public void moveUnits() {
-        if (this.hasWarlord()) {
-            Iterator<Warrior> newArmyIterator = warlord.rearrangeArmy(iterator());
-            head.next = head;
-            tail = head;
+        if (warlord !=null) {
+            Iterator<Warrior> newArmyIterator = warlord.moveUnits(iterator());
+            clear();
             while(newArmyIterator.hasNext()){
-                addToTail(newArmyIterator.next());
+                addUnits(newArmyIterator::next,1);
             }
         }
     }
 
-    @Override
-    public boolean hasWarlord() {
-        var it = iterator();
-        while (it.hasNext()) {
-            if (it.next() instanceof Warlord warlord) {
-                this.warlord = warlord;
-                return true;
-            }
-        }
-        return false;
+    private void clear() {
+        head.next = head;
+        tail = head;
+        size = 0;
     }
 
     public void equipWarriorAtPosition(int position, WeaponI weaponI) {
@@ -67,24 +61,19 @@ public class Army implements WarlordInArmy {
     }
 
     public Army addUnits(Supplier<Warrior> factory, int quantity) {
-        Warrior warriorFromFactory = factory.get();
-        if (warriorFromFactory instanceof Warlord warlord) {
-            var it = iterator();
-            while (it.hasNext()) {
-                if (it.next()
-                      .getClass() == warlord.getClass()) {
-                    return this;
+        for (int i = 0; i < quantity; i++) {
+            Warrior warrior = factory.get();
+            if (warrior instanceof Warlord newWarlord){
+                if (warlord == null){
+                    warlord = newWarlord;
+                } else{
+                    break;
                 }
             }
-            addToTail(warriorFromFactory);
-            return this;
-        }
-
-        for (int i = 0; i < quantity; i++) {
             addToTail(factory.get());
+            size++;
         }
         return this;
-
     }
 
     public Iterator<Warrior> firstAlive() {
@@ -102,23 +91,22 @@ public class Army implements WarlordInArmy {
     // Only for testing
     public Warrior unitAtPosition(int position) {
         Iterator<Warrior> iterator;
-        int counter;
+        int cursor = 0;
 
         if(position < 0){
-            counter = -1;
+            cursor = -1;
             iterator = backwardIterator();
             while (iterator.hasNext()){
-                if(position == counter){
+                if(position == cursor){
                     return iterator.next();
                 }
-                counter--;
+                cursor--;
                 iterator.next();
             }
         } else {
-            counter = 0;
             iterator = iterator();
             while (iterator.hasNext()){
-                if(position == counter++){
+                if(position == cursor++){
                     return iterator.next();
                 }
                 iterator.next();
@@ -128,13 +116,7 @@ public class Army implements WarlordInArmy {
     }
 
     public int size(){
-        Iterator<Warrior> iterator = iterator();
-        int size = 0;
-        while (iterator.hasNext()){
-            size++;
-            iterator.next();
-        }
-        return size;
+        return this.size;
     }
 
     private Warrior peek() {
@@ -151,6 +133,7 @@ public class Army implements WarlordInArmy {
         }
         head.next = head.next.next;
         head.next.prev = head;
+        size--;
         this.moveUnits();
     }
 
@@ -166,6 +149,7 @@ public class Army implements WarlordInArmy {
     private class Node
             extends Warrior
             implements WarriorInArmy {
+
 
         Warrior warrior;
         Node next;
@@ -211,12 +195,13 @@ public class Army implements WarlordInArmy {
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
             next.takeOrder(new HealingCommand());
-//            next.takeOrder(new ArcherCommand(defender));
+            if(!(warrior instanceof Archer)) {
+                next.takeOrder(new ArcherCommand(defender));
+            }
         }
 
         @Override
         public void takeOrder(Command command) {
-
             command.executeCommand(this);
             if (next != head) {
                 next.takeOrder(command);
