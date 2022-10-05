@@ -69,9 +69,10 @@ public class Army {
         @Override
         public void hit(CanReceiveDamage defender) {
             warrior.hit(defender);
-            next.takeOrder(new HealingCommand());
-            if(!(warrior instanceof Archer)) {
-                next.takeOrder(new ArcherCommand(defender));
+            if(next!=head) {
+                next.takeOrder(new HealingCommand());
+                Warrior nextDefender = ((WarriorInArmy) defender).getNextBehind();
+                next.takeOrder(new ArcherCommand(nextDefender));
             }
         }
 

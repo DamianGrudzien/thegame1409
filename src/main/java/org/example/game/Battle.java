@@ -3,8 +3,12 @@ package org.example.game;
 import org.example.game.characters.Army;
 import org.example.game.characters.Healer;
 import org.example.game.characters.Warrior;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Battle {
+
+    private static Logger log = LoggerFactory.getLogger(Battle.class);
 
     private Battle() {
     }
@@ -20,11 +24,11 @@ public class Battle {
 
         } while (warrior1.isAlive() && warrior2.isAlive());
 
+        log.debug("First Warrior is alive?: {}",warrior1.isAlive());
         return warrior1.isAlive();
     }
 
     public static boolean straightFight(Army army1, Army army2){
-
         while(true){
             var it1 = army1.iterator();
             var it2 = army2.iterator();
@@ -44,7 +48,7 @@ public class Battle {
                 }
             }
 
-
+            log.debug("Removing Dead warriors in armies");
             army1.removeDeadWarriors();
             army2.removeDeadWarriors();
         }
@@ -59,7 +63,7 @@ public class Battle {
         while(it1.hasNext() && it2.hasNext()){
             fight(it1.next(), it2.next());
         }
-
+        log.debug("First army win?: {}", it1.hasNext());
         return it1.hasNext();
     }
 }

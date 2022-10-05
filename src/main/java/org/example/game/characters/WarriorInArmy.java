@@ -44,7 +44,7 @@ class ArcherCommand implements Command {
                 && (warriorNode.getWarrior() instanceof Archer archer)) {
 
             archer.hitWithBow(defender);
-            log.info("{}", defender.getClass().getSimpleName());
+            log.debug("{}", defender.getClass().getSimpleName());
             if (defenderInArmy.getNextBehind() != null) {
                 defender = defenderInArmy.getNextBehind();
             }

@@ -16,6 +16,7 @@ public class Lancer extends Warrior implements KnowsDamageDealt {
     @Override
     public void hit(CanReceiveDamage defender) {
         int damageDealt = hitAndReportDamage(defender);
+
         if (defender instanceof WarriorInArmy defenderInArmy) {
             for (int i = 1; i < RANGE_OF_LANCE; i++) {
 
