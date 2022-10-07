@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public class Archer extends Warrior implements KnowsDamageDealt{
     private Logger log = LoggerFactory.getLogger(Archer.class);
-    private Weapon arrowAttack = WeaponI.newBow();
+    private final Weapon arrowAttack = WeaponI.newBow();
+
+    private int arrows = 20;
 
     public Archer() {
         super(30, 2);
@@ -23,11 +25,21 @@ public class Archer extends Warrior implements KnowsDamageDealt{
     }
 
     public void hitWithBow(CanReceiveDamage defender){
-        int beforeAttack = defender.getHealth();
-        defender.receiveDamage(arrowAttack);
-        int difference = beforeAttack - defender.getHealth();
+        if (arrows > 0 && defender.isAlive()) {
+            int beforeAttack = defender.getHealth();
+            defender.receiveDamage(arrowAttack);
+            int difference = beforeAttack - defender.getHealth();
+            log.debug("Archer attack with arrow: {}", difference);
+            arrows--;
+        }
 
-        log.debug("Archer attacking with arrow: {}", difference);
+
         log.debug("{} health: {}", ((WarriorInArmy) defender).getWarrior().getClass().getSimpleName(), defender.getHealth());
+        log.debug("Arrows left: {}",arrows);
+    }
+
+    // For test purpose only
+    int getArrows(){
+        return arrows;
     }
 }

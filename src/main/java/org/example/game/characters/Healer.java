@@ -1,8 +1,16 @@
 package org.example.game.characters;
 
+import org.example.game.weapons.WeaponI;
+
 public class Healer extends Warrior implements HasHealing{
 
     private int healPower = 2;
+
+    public int getInitialHealPower() {
+        return initialHealPower;
+    }
+
+    private final int initialHealPower = healPower;
     private int healingStamina = 50;
 
     public Healer() {
@@ -16,9 +24,8 @@ public class Healer extends Warrior implements HasHealing{
         }
     }
 
-
     public void setHealPower(int healPower) {
-        this.healPower = healPower;
+        this.healPower = Math.max(0,healPower);
     }
 
     @Override
@@ -29,5 +36,14 @@ public class Healer extends Warrior implements HasHealing{
     @Override
     public void hit(CanReceiveDamage defender) {
         // Healer is not attacking
+    }
+
+    @Override
+    public void equipWeapon(WeaponI weaponI) {
+        super.equipWeapon(weaponI);
+        int sumOfHealingBonus = weapons.stream()
+                                       .mapToInt(WeaponI::getHealPower)
+                                       .sum();
+        setHealPower(getInitialHealPower() + sumOfHealingBonus);
     }
 }

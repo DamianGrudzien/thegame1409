@@ -1,8 +1,16 @@
 package org.example.game.characters;
 
-public class Vampire extends Warrior implements KnowsDamageDealt, HasVampirism{
+import org.example.game.weapons.WeaponI;
 
-    private int vampirism = 50;
+public class Vampire extends Warrior implements KnowsDamageDealt{
+
+    protected int vampirism = 50;
+
+    public int getInitialVampirism() {
+        return initialVampirism;
+    }
+
+    protected int initialVampirism = vampirism;
 
 
     public Vampire() {
@@ -23,12 +31,20 @@ public class Vampire extends Warrior implements KnowsDamageDealt, HasVampirism{
     }
 
     @Override
-    public int getVampirism() {
+    public void equipWeapon(WeaponI weaponI) {
+        super.equipWeapon(weaponI);
+        int getBonusVamipirism = weapons.stream()
+                                       .mapToInt(WeaponI::getVampirism)
+                                       .sum();
+        setVampirism(getInitialVampirism() + getBonusVamipirism);
+    }
+
+    int getVampirism() {
         return vampirism;
     }
 
 
     public void setVampirism(int vampirism) {
-        this.vampirism = vampirism;
+        this.vampirism = Math.max(0,vampirism);
     }
 }

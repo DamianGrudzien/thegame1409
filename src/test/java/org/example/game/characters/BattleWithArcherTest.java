@@ -1,7 +1,6 @@
 package org.example.game.characters;
 
 import org.example.game.Battle;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -75,6 +74,23 @@ public class BattleWithArcherTest {
 
         //Then
         assertEquals(46,army1.unitAtPosition(1).getHealth());
+    }
+
+    @Test
+    @DisplayName("Archer not attacking after losing all arrows")
+    void archerNotAttackingAfterLosingAllArrows() {
+        // Given
+        var army1 = new Army(Warrior::new,6).addUnits(Archer::new,2);
+        var army2 = new Army(Warrior::new,6);
+
+        // When
+        Battle.fight(army1, army2);
+        var res = ((Archer) army1.unitAtPosition(4)).getArrows();
+        var res1 = ((Archer) army1.unitAtPosition(5)).getArrows();
+
+        //Then
+        assertEquals(0, res);
+        assertEquals(0, res1);
     }
 
 }
