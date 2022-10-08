@@ -2,24 +2,22 @@ package org.example.game.characters;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
-public class Warlord extends Defender{
+public class Warlord extends Defender {
 
-    // Get units from army then remove all units, then fill it with add units
     public Warlord() {
-        super(100,4,2);
+        super(100, 4, 2);
     }
 
 
-    Iterator<Warrior> rearrangeArmy(Iterator<Warrior> iterator) {
+    Iterator<Warrior> moveUnits(Iterator<Warrior> iterator) {
+        List<Lancer> lancers = new LinkedList<>();
+        List<Healer> healers = new LinkedList<>();
+        List<Warrior> warriors = new LinkedList<>();
+        List<Archer> archers = new LinkedList<>();
 
-
-        LinkedList<Lancer> lancers = new LinkedList<>();
-        LinkedList<Healer> healers = new LinkedList<>();
-        LinkedList<Warrior> warriors = new LinkedList<>();
-        Warlord warlordPrimary = null;
-
-        LinkedList<Warrior> newWarriors = new LinkedList<>();
+        LinkedList<Warrior> newWarriorsLine = new LinkedList<>();
 
         while (iterator.hasNext()) {
             Warrior nextWarrior = iterator.next();
@@ -27,23 +25,44 @@ public class Warlord extends Defender{
                 lancers.add(lancer);
             } else if(nextWarrior instanceof Healer healer){
                 healers.add(healer);
-            } else if(nextWarrior instanceof Warlord warlord){
-                warlordPrimary = warlord;
-            } else {
+            } else if(nextWarrior instanceof Archer archer){
+                archers.add(archer);
+            } else if(!(nextWarrior instanceof Warlord)){
                 warriors.add(nextWarrior);
             }
         }
-        if (!lancers.isEmpty()) {
-            newWarriors.addAll(lancers);
-        }
-        newWarriors.addAll(warriors);
-        if (!newWarriors.isEmpty()) {
-            newWarriors.addAll(1, healers);
-        } else {
-            newWarriors.addAll(healers);
-        }
-        newWarriors.add(warlordPrimary);
+        newWarriorsLine.addAll(lancers);
+        newWarriorsLine.addAll(warriors);
+        newWarriorsLine.addAll(archers);
+        newWarriorsLine.addAll(Math.min(newWarriorsLine.size(),1), healers);
+        newWarriorsLine.add(this);
 
-        return newWarriors.iterator();
+        return newWarriorsLine.iterator();
+
+
+        // Different Approach with Streams
+//        List<Warrior> list = new ArrayList<>();
+//        while (iterator.hasNext()) {
+//            list.add(iterator.next());
+//        }
+//
+//        var lancers = list.stream()
+//                          .filter(Lancer.class::isInstance)
+//                          .toList();
+//        var healers = list.stream()
+//                          .filter(Healer.class::isInstance)
+//                          .toList();
+//        var restWarriors = list.stream()
+//                               .filter(not(Lancer.class::isInstance))
+//                               .filter(not(Healer.class::isInstance))
+//                               .filter(not(Warlord.class::isInstance))
+//                               .toList();
+//        List<Warrior> out = new ArrayList<>();
+//        out.addAll(lancers);
+//        out.addAll(restWarriors);
+//        out.addAll(Math.min(out.size(),1),healers);
+//        out.add(this);
+//        return out.iterator();
+
     }
 }

@@ -25,4 +25,19 @@ class BattleStraightFightTest {
         assertTrue(Battle.straightFight(myArmy, enemyArmy));
     }
 
+    @Test
+    @DisplayName("Only Healers in Army")
+    void onlyHealersInArmy() {
+        // Given
+        var army1 = new Army(Healer::new, 2);
+        var army2 = new Army(Healer::new, 2);
+
+        // When
+        var res = Battle.straightFight(army1, army2);
+
+        // Then
+        assertTrue(res);
+
+    }
+
 }

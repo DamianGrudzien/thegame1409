@@ -3,45 +3,71 @@ package org.example.game.characters;
 
 import org.example.game.weapons.WeaponI;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Warrior extends AbstractWarrior implements HasWeapon{
 
+    List<WeaponI> weapons = new ArrayList<>();
+
     protected int attack;
+
+
+    protected int initialAttack;
     protected int health;
-    protected int initialHealth;
+    protected final int initialHealth;
+    protected int maxHealth;
 
     public Warrior(){
-        attack = 5;
-        health = 50;
-        initialHealth = health;
+        initialAttack = attack = 5;
+        maxHealth = initialHealth = health = 50;
     }
 
     public Warrior(int health, int attack) {
-        initialHealth = this.health = health;
-        this.attack = attack;
+        this.initialHealth = this.maxHealth = this.health = health;
+        this.initialAttack = this.attack = attack;
     }
 
-    private WarriorWithWeapon warriorWithWeapon;
+//    private WarriorWithWeapon warriorWithWeapon;
 
-
-    private void setInitialHealth(int health) {
-         initialHealth = this.health = health;
-    }
 
     @Override
     public void setAttack(int attack) {
         this.attack = Math.max(0,attack);
     }
 
-    public void equipWeapon(WeaponI weaponI) {
-       warriorWithWeapon = new WarriorWithWeapon(this, weaponI);
-       (this).setAttack(warriorWithWeapon.getAttack());
-       (this).setInitialHealth(warriorWithWeapon.getHealth());
-        switch (this.getClass().getSimpleName()) {
-            case "Defender" -> ((Defender) this).setDefense(warriorWithWeapon.getDefense());
-            case "Healer" -> ((Healer) this).setHealPower(warriorWithWeapon.getHealPower());
-            case "Vampire" -> ((Vampire) this).setVampirism(warriorWithWeapon.getVampirism());
-            default -> {}
-        }
+//    public void equipWeapon(WeaponI weaponI) {
+//       warriorWithWeapon = new WarriorWithWeapon(this, weaponI);
+//       (this).setAttack(warriorWithWeapon.getAttack());
+//       (this).setInitialHealth(warriorWithWeapon.getHealth());
+//        switch (this.getClass().getSimpleName()) {
+//            case "Defender" -> ((Defender) this).setDefense(warriorWithWeapon.getDefense());
+//            case "Healer" -> ((Healer) this).setHealPower(warriorWithWeapon.getHealPower());
+//            case "Vampire" -> ((Vampire) this).setVampirism(warriorWithWeapon.getVampirism());
+//            default -> {}
+//        }
+//    }
+
+    public int getInitialHealth() {
+        return initialHealth;
+    }
+
+    public void equipWeapon(WeaponI weaponI){
+        weapons.add(weaponI);
+        int getBonusAttack = weapons.stream()
+                                    .mapToInt(WeaponI::getAttack)
+                                    .sum();
+        int getBonusHealth = weapons.stream()
+                                    .mapToInt(WeaponI::getHealth)
+                                    .sum();
+        int increasedHealth = getInitialHealth() + getBonusHealth;
+        setMaxHealth(increasedHealth);
+        setHealth(increasedHealth);
+        setAttack(initialAttack + getBonusAttack);
+    }
+
+    private void setMaxHealth(int health) {
+        maxHealth = Math.max(0,health);
     }
 
     @Override
@@ -51,7 +77,7 @@ public class Warrior extends AbstractWarrior implements HasWeapon{
 
     @Override
     protected void setHealth(int health) {
-        this.health = Math.min(initialHealth, health);
+        this.health = Math.min(maxHealth, health);
     }
 
     @Override

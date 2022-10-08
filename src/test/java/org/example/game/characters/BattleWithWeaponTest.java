@@ -156,7 +156,7 @@ class BattleWithWeaponTest {
         enemyArmy.equipWarriorAtPosition(1,weapon2);
 
         //Then
-        assertTrue(Battle.fight(myArmy,enemyArmy));
+        assertFalse(Battle.fight(myArmy,enemyArmy));
     }
 
     @Test
