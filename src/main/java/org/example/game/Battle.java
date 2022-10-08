@@ -1,14 +1,13 @@
 package org.example.game;
 
 import org.example.game.characters.Army;
-import org.example.game.characters.Healer;
 import org.example.game.characters.Warrior;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Battle {
 
-    private static Logger log = LoggerFactory.getLogger(Battle.class);
+    private static final Logger log = LoggerFactory.getLogger(Battle.class);
 
     private Battle() {
     }
@@ -41,11 +40,7 @@ public class Battle {
             }
 
             while (it1.hasNext() && it2.hasNext()) {
-                Warrior warriorArmy1 = it1.next();
-                Warrior warriorArmy2 = it2.next();
-                if (!((warriorArmy1 instanceof Healer) && (warriorArmy2 instanceof Healer))) {
-                    fight(warriorArmy1, warriorArmy2);
-                }
+                fight(it1.next(), it2.next());
             }
 
             log.debug("Removing Dead warriors in armies");
